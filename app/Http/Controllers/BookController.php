@@ -48,23 +48,23 @@ class BookController extends Controller
             Storage::delete($book->book_file_path);
         }
 
-        // Delete the book record from the database
+
         $book->delete();
 
         return response()->json(['message' => 'Book deleted successfully'], 200);
     }
 
      public function editBook(Request $request, $id) {
-        // Validate the incoming request data
+
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
         ]);
 
-        // Find the book by ID
+
         $book = Book::find($id);
         if ($book) {
-           // Update the book properties
+
         $book->title = $request->title;
         $book->description = $request->description;
         $book->update();
@@ -85,8 +85,7 @@ class BookController extends Controller
         }
 
         if ($book->status == 'Available') {
-            $book->status = 'Not Available';
-            $book->save();
+
 
             $order = new OrderBook();
             $order->book_id = $book->id;
